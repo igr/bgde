@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> BGDE </title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.14.3/firebase-app.js"></script>
+    <script defer src="/__/firebase/7.14.3/firebase-analytics.js"></script>
+    <script defer src="/__/firebase/7.14.3/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.14.3/firebase-firestore.js"></script>
+    <!--script defer src="/__/firebase/7.14.3/firebase-messaging.js"></script-->
+    <!--script defer src="/__/firebase/7.14.3/firebase-storage.js"></script-->
+    <!-- initialize the SDK after all desired features are loaded -->
+<!--    <script defer src="/__/firebase/init.js"></script>-->
+    <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js" async></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0pd0yB1B5wqmuvphwkHp4Q61X_cl25Sw&callback=initMap"></script>
+
+    <!-- auth ui -->
+    <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth__sr.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
+  </head>
+  <body>
+
+    <div id="firebaseui-auth-container" class="modal">
+      <div class="close"></div>
+    </div>
+
+    <div id="add" class="modal">
+      <div class="close"></div>
+      <h2>Твоје посебно БГД место</h2>
+      <form onsubmit="submitNewPoint(this); return false">
+        <div style="display: flex">
+          <div id="emotion"></div>
+          <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;">
+        </div>
+        <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?"></textarea>
+        <button type="submit">Сачувај и подели</button>
+      </form>
+    </div>
+
+    <main id="container">
+      <nav>
+        <a href="#" id="login">login</a>
+      </nav>
+      <div id="map"></div>
+    </main>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
