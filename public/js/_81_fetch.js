@@ -98,12 +98,14 @@ function createPopupClass() {
   /** Called when the popup is added to the map. */
   Popup.prototype.onAdd = function() {
     this.getPanes().floatPane.appendChild(this.containerDiv);
+    this.containerDiv.style.zIndex = 50;
   };
 
   /** Called when the popup is removed from the map. */
   Popup.prototype.onRemove = function() {
     if (this.containerDiv.parentElement) {
       this.containerDiv.parentElement.removeChild(this.containerDiv);
+      this.containerDiv.style.zIndex = -1;
     }
   };
 

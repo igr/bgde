@@ -225,7 +225,7 @@ function createMapSwitchTypeControl(controlDiv, map) {
   controlUI.style.marginRight = '10px';
   controlUI.style.width = '40px';
   controlUI.style.textAlign = 'center';
-  controlUI.title = 'Tip mape';
+  controlUI.title = 'Тип мапе';
   controlDiv.appendChild(controlUI);
 
   // Set CSS for the control interior.
@@ -255,6 +255,7 @@ function initMap() {
     center: {lat: 44.787197, lng: 20.457273},
     zoom: 10,
     minZoom: 10,
+    clickableIcons: false,
     streetViewControl: false,
     mapTypeControl: false,
     mapTypeControlOptions: {
@@ -285,7 +286,9 @@ function initMap() {
 
   // info window
 
-  const infowindow = new google.maps.InfoWindow;
+  const infowindow = new google.maps.InfoWindow({
+    pixelOffset:new google.maps.Size(0, -10),
+  });
   const marker = new google.maps.Marker({
     icon: iconbase + '/map-star.png',
     draggable: true,
@@ -298,7 +301,7 @@ function initMap() {
     marker.setMap(map);
     marker.setPosition(e.latLng);
     infowindow.setContent(
-      "<a href='#' onclick='addNewPoint" + e.latLng + "; return false;'>Moje mesto...</a>")
+      "<a href='#' class='star' onclick='addNewPoint" + e.latLng + "; return false;'>Моје место...</a>")
     ;
     infowindow.open(map, marker);
   });
@@ -485,12 +488,14 @@ function createPopupClass() {
   /** Called when the popup is added to the map. */
   Popup.prototype.onAdd = function() {
     this.getPanes().floatPane.appendChild(this.containerDiv);
+    this.containerDiv.style.zIndex = 50;
   };
 
   /** Called when the popup is removed from the map. */
   Popup.prototype.onRemove = function() {
     if (this.containerDiv.parentElement) {
       this.containerDiv.parentElement.removeChild(this.containerDiv);
+      this.containerDiv.style.zIndex = -1;
     }
   };
 
