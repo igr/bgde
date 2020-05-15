@@ -1,16 +1,25 @@
 
 function signedIn(user) {
-  console.log("AUTH");
   theUser = user;
+  _('#login').style.display = 'none';
+  _('#user').style.display = 'block';
+  _('img', _('#user')).src = user.photoURL;
 }
 
 function signedOut() {
   theUser = null;
+  _('#login').style.display = 'block';
+  _('#user').style.display = 'none';
 }
 
 function initLogin() {
   _('#login').addEventListener('click', () => {
     showModal("#firebaseui-auth-container");
+  });
+  _('#logout').addEventListener('click', () => {
+    auth.signOut().then(() => {
+      location.reload();
+    });
   });
 }
 

@@ -1,12 +1,15 @@
 
 const iconbase = '/gfx';
 
+// map
 const MAX_EMOTIONS = 4;
 let emotion = 1;
 
+// auth
 let theUser = null;
 
 // firebase
+let auth;
 let db;
 /**
  * Selects single element in DOM tree.
@@ -343,6 +346,7 @@ firebaseConfig = {
 function initFirebase() {
   firebase.initializeApp(firebaseConfig);
   db = firebase.firestore();
+  auth = firebase.auth();
 
   // auth UI
   const uiConfig = {
@@ -369,11 +373,11 @@ function initFirebase() {
   };
 
   // Initialize the FirebaseUI Widget using Firebase
-  const ui = new firebaseui.auth.AuthUI(firebase.auth());
+  const ui = new firebaseui.auth.AuthUI(auth);
   // The start method will wait until the DOM is loaded.
   ui.start('#firebaseui-auth-container', uiConfig);
 
-  firebase.auth().onAuthStateChanged(function(user) {
+  auth.onAuthStateChanged(function(user) {
     if (user) {
       signedIn(user);
     } else {
@@ -513,17 +517,26 @@ function createPopupClass() {
 }
 
 function signedIn(user) {
-  console.log("AUTH");
   theUser = user;
+  _('#login').style.display = 'none';
+  _('#user').style.display = 'block';
+  _('img', _('#user')).src = user.photoURL;
 }
 
 function signedOut() {
   theUser = null;
+  _('#login').style.display = 'block';
+  _('#user').style.display = 'none';
 }
 
 function initLogin() {
   _('#login').addEventListener('click', () => {
     showModal("#firebaseui-auth-container");
+  });
+  _('#logout').addEventListener('click', () => {
+    auth.signOut().then(() => {
+      location.reload();
+    });
   });
 }
 

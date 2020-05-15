@@ -3,9 +3,7 @@
   height: 100%;
 }
 
-
 .popup-bubble {
-  /* Position the bubble centred-above its parent. */
   position: absolute;
   top: 0;
   left: 0;
@@ -17,7 +15,7 @@
   overflow-y: auto;
   font-family: $font-text;
   font-size: 18px;
-  border: 2px solid #000000;
+  border: 2px solid var(--dark-bg-color);
   width: 300px;
   height: 48px;
   cursor: pointer;
