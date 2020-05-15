@@ -38,298 +38,177 @@ function ready(callback) {
       if (document.readyState === 'complete') callback();
     });
 }
-const styles = [
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#ebe3cd"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#523735"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#f5f1e6"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#c9b2a6"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#dcd2be"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#ae9e90"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.neighborhood",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.natural",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dfd2ae"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dfd2ae"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#93817c"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#a5b076"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#447530"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#f5f1e6"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#fdfcf8"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#f8c967"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#e9bc62"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway.controlled_access",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e98d58"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway.controlled_access",
-    "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#db8555"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#806b63"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dfd2ae"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#8f7d77"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#ebe3cd"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dfd2ae"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#b9d3c2"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#92998d"
-      }
-    ]
-  }
-];
+const styles =
+  [
+    {
+      "featureType": "all",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "weight": "2.00"
+        }
+      ]
+    },
+    {
+      "featureType": "all",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#9c9c9c"
+        }
+      ]
+    },
+    {
+      "featureType": "all",
+      "elementType": "labels.text",
+      "stylers": [
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#f2f2f2"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape.man_made",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "all",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "all",
+      "stylers": [
+        {
+          "saturation": -100
+        },
+        {
+          "lightness": 45
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#7b7b7b"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "all",
+      "stylers": [
+        {
+          "visibility": "simplified"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "elementType": "all",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "all",
+      "stylers": [
+        {
+          "color": "#46bcec"
+        },
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#c8d7d4"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#070707"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    }
+  ]
 let map;
 
 function createMapSwitchTypeControl(controlDiv, map) {
@@ -406,6 +285,7 @@ function initMap() {
   const infowindow = new google.maps.InfoWindow;
   const marker = new google.maps.Marker({
     icon: iconbase + '/map-star.png',
+    draggable: true,
     map
   });
 
@@ -505,6 +385,8 @@ function initFirebase() {
 const points = {};
 
 function fetchPoints() {
+  Popup = createPopupClass();
+
   const query = db
     .collection("points")
     .orderBy('t', 'desc');
@@ -527,6 +409,10 @@ function fetchPoints() {
             map
           });
 
+          marker.addListener('mouseover', () => {
+            showPointInfo(map, data.n, data.x, data.e);
+          });
+
           points[id] = {
             marker: marker,
             data: data,
@@ -535,9 +421,96 @@ function fetchPoints() {
       });
     }
   );
+}
+let popup, Popup;
 
+function showPointInfo(map, name, x, e) {
+  popup = new Popup(
+    new google.maps.LatLng(x.latitude, x.longitude),
+    name,
+    e
+  );
+  popup.setMap(map);
 }
 
+function closePointInfo() {
+  popup.setMap(null);
+}
+
+/**
+ * Returns the Popup class.
+ *
+ * Unfortunately, the Popup class can only be defined after
+ * google.maps.OverlayView is defined, when the Maps API is loaded.
+ * This function should be called by initMap.
+ */
+function createPopupClass() {
+  function Popup(position, contentText, emotion) {
+    this.position = position;
+
+    const content = document.createElement('div');
+    content.classList.add('popup-bubble');
+
+    const img = document.createElement('img');
+    img.src = iconbase + `/em-${emotion}.png`;
+    content.appendChild(img);
+    const span = document.createElement('span')
+    span.appendChild(document.createTextNode(contentText));
+    content.appendChild(span);
+    // close it when mouse is out
+    content.addEventListener('mouseout', () => { closePointInfo(); });
+
+
+    // This zero-height div is positioned at the bottom of the bubble.
+    const bubbleAnchor = document.createElement('div');
+    bubbleAnchor.classList.add('popup-bubble-anchor');
+    bubbleAnchor.appendChild(content);
+
+    // This zero-height div is positioned at the bottom of the tip.
+    this.containerDiv = document.createElement('div');
+    this.containerDiv.classList.add('popup-container');
+    this.containerDiv.appendChild(bubbleAnchor);
+
+    // Optionally stop clicks, etc., from bubbling up to the map.
+    google.maps.OverlayView.preventMapHitsAndGesturesFrom(this.containerDiv);
+  }
+
+  // ES5 magic to extend google.maps.OverlayView.
+  Popup.prototype = Object.create(google.maps.OverlayView.prototype);
+
+  /** Called when the popup is added to the map. */
+  Popup.prototype.onAdd = function() {
+    this.getPanes().floatPane.appendChild(this.containerDiv);
+  };
+
+  /** Called when the popup is removed from the map. */
+  Popup.prototype.onRemove = function() {
+    if (this.containerDiv.parentElement) {
+      this.containerDiv.parentElement.removeChild(this.containerDiv);
+    }
+  };
+
+  /** Called each frame when the popup needs to draw itself. */
+  Popup.prototype.draw = function() {
+    const divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
+
+    // Hide the popup when it is far out of view.
+    const display =
+      Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ?
+        'block' :
+        'none';
+
+    if (display === 'block') {
+      this.containerDiv.style.left = divPosition.x + 'px';
+      this.containerDiv.style.top = divPosition.y + 'px';
+    }
+    if (this.containerDiv.style.display !== display) {
+      this.containerDiv.style.display = display;
+    }
+  };
+
+  return Popup;
+}
 
 function signedIn(user) {
   console.log("AUTH");

@@ -74,6 +74,7 @@ function initMap() {
   const infowindow = new google.maps.InfoWindow;
   const marker = new google.maps.Marker({
     icon: iconbase + '/map-star.png',
+    draggable: true,
     map
   });
 
