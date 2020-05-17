@@ -1,12 +1,25 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+  	// POINTS
+
   	match /points/{pointId} {
+      // Anyone can read points
+      allow list: if true;
       allow read: if true;
+      // adding is limited to authenticated users
+      allow create: if request.auth.uid != null
+                       && (request.resource.data.n.size() <= 51
+                           && request.resource.data.d.size() <= 4000
+                          );
+      // authenticated user can create/update
+      allow update: if request.auth.uid != null
+                       && request.resource.data.uid == request.auth.uid
+                       && (request.resource.data.n.size() <= 51
+                          && request.resource.data.d.size() <= 4000
+                       );
       allow delete: if false;
-    }
-    match /{document=**} {
-      allow write: if false;
     }
   }
 }

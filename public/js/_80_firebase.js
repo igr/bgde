@@ -1,3 +1,5 @@
+let auth;
+let db;
 
 firebaseConfig = {
   apiKey: "AIzaSyAj0GInhoN4pxHcs259t3YxefXIoh4JLCg",

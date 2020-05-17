@@ -7,7 +7,3 @@ let emotion = 1;
 
 // auth
 let theUser = null;
-
-// firebase
-let auth;
-let db;

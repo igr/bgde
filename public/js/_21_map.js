@@ -1,5 +1,4 @@
 let map;
-
 function createMapSwitchTypeControl(controlDiv, map) {
   const controlUI = document.createElement('div');
   controlUI.style.backgroundColor = '#fff';
@@ -70,28 +69,5 @@ function initMap() {
   mapTypeSwitchControl.index = 1;
   map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(mapTypeSwitchControl);
 
-  // info window
-
-  const infowindow = new google.maps.InfoWindow({
-    pixelOffset:new google.maps.Size(0, -10),
-  });
-  const marker = new google.maps.Marker({
-    icon: iconbase + '/map-star.png',
-    draggable: true,
-    map
-  });
-
-  // listeners
-
-  map.addListener('rightclick', (e) => {
-    marker.setMap(map);
-    marker.setPosition(e.latLng);
-    infowindow.setContent(
-      "<a href='#' class='star' onclick='addNewPoint" + e.latLng + "; return false;'>Моје место...</a>")
-    ;
-    infowindow.open(map, marker);
-  });
-  google.maps.event.addListener(infowindow,'closeclick', () => {
-    marker.setMap(null);
-  });
+  initMapMarker();
 }
