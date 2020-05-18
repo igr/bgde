@@ -461,13 +461,17 @@ function storeNewPoint(emotionId, name, description, userId, lat, lng) {
 function showPointDialog(id, data) {
   detach('#point');
 
-  const dialog = render('#_point', {data}).attach('body');
+  const dialog = render('#_point', {data, theUser}).attach('body');
 
   _('.close', dialog).addEventListener('click', () => {
     closePointDialog(dialog);
   });
   _('button', dialog).addEventListener('click', () => {
     closePointDialog(dialog);
+  });
+  _('#deletePoint', dialog).addEventListener('click', () => {
+    closePointDialog(dialog);
+    deletePoint(id);
   });
 
   onEscapeKey(() => {closePointDialog(dialog);});
@@ -663,6 +667,18 @@ function createPopupClass() {
   };
 
   return Popup;
+}
+function deletePoint(id) {
+  db
+    .collection("points")
+    .doc(id)
+    .delete()
+    .then(() => {
+    })
+    .catch((error) => {
+      showAlert('Нажалост, брисање није успело.')
+      console.error("Error removing document: ", error);
+    });
 }
 
 function signedIn(user) {

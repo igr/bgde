@@ -13,13 +13,15 @@ service cloud.firestore {
                        && (request.resource.data.n.size() <= 51
                            && request.resource.data.d.size() <= 4000
                           );
-      // authenticated user can create/update
+      // authenticated user can create/update their docs
       allow update: if request.auth.uid != null
-                       && request.resource.data.uid == request.auth.uid
+                       && resource.data.u == request.auth.uid
                        && (request.resource.data.n.size() <= 51
                           && request.resource.data.d.size() <= 4000
                        );
-      allow delete: if false;
+      // authenticated user can delete their docs
+      allow delete: if request.auth.uid != null
+                       && resource.data.u == request.auth.uid;
     }
   }
 }

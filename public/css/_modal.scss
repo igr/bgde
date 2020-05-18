@@ -44,7 +44,7 @@
   cursor: pointer;
 }
 #point {
-  height: 600px;
+  height: auto;
   h1 {
     width: 80%;
     margin:auto;
@@ -60,5 +60,9 @@
   img {
     float: left;
     margin-top: 30px;
+  }
+  .editLinks {
+    margin-top: 10px;
+    text-align: center;
   }
 }

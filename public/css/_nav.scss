@@ -10,15 +10,6 @@ nav {
   padding: 10px;
   text-align: center;
   width: 100px;
-  a {
-    color: var(--text-color);
-    padding: 4px 6px 8px 6px;
-    border-radius: 4px;
-    &:hover {
-      color: #fff;
-      background-color: var(--dark-bg-color);
-    }
-  }
 }
 
 #login {
