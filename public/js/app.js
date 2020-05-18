@@ -1,9 +1,13 @@
 
 const iconbase = '/gfx';
-
-
-// auth
-let theUser = null;
+function navigate(lat, lng){
+  if( (navigator.platform.indexOf("iPhone") != -1)
+    || (navigator.platform.indexOf("iPod") != -1)
+    || (navigator.platform.indexOf("iPad") != -1))
+    window.open(`maps://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${lat},${lng}`);
+  else
+    window.open(`https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${lat},${lng}`);
+}
 // ten - super simple framework
 
 function _(selector, src) {
@@ -370,9 +374,21 @@ const MAX_EMOTIONS = 4;
 let emotion = 0;
 
 function showNewPoint(lat, lng) {
+  showEditPoint({
+    data: {
+      e: 0,
+      x: {
+        latitude: lat,
+        longitude: lng
+      }
+    }
+  })
+}
+
+function showEditPoint(ctx) {
   detach('#add');
 
-  const dialog = render('#_add', {lat, lng}).attach('body');
+  const dialog = render('#_add', ctx).attach('body');
 
   _('.close', dialog).addEventListener('click', () => {
     closePointDialog(dialog);
@@ -381,7 +397,8 @@ function showNewPoint(lat, lng) {
     closeNewPoint(dialog);
   })
 
-  emotion = 0;
+  emotion = ctx.data.e - 1;
+  changeEmotion();
   if (!theUser) {
     showAlert('Морате бити пријављени да би додавали места!');
   }
@@ -400,62 +417,51 @@ function changeEmotion() {
   _("#emotion").style.backgroundImage = 'url(' + iconbase + `/em-${emotion}.png)`;
 }
 
-function submitNewPoint(e) {
-  const add = e;
-  const title = _('[name="naziv"]', add).value.substring(0, MAX_TITLE);
-  const description = _('[name="opis"]', add).value.substring(0, MAX_DESC);
-  const lng = parseFloat(_('[name="lng"]', add).value);
-  const lat = parseFloat(_('[name="lat"]', add).value);
+function submitNewPoint(dialog) {
+  const docId = _('[name="id"]', dialog).value;
+  const title = _('[name="naziv"]', dialog).value.substring(0, MAX_TITLE);
+  const description = _('[name="opis"]', dialog).value.substring(0, MAX_DESC);
+  const lng = parseFloat(_('[name="lng"]', dialog).value);
+  const lat = parseFloat(_('[name="lat"]', dialog).value);
 
   if (!theUser) {
-    addNewPointError('Морате бити пријавлјени да би додавали места!');
+    showFormError('Морате бити пријављени да би додавали места!');
     return false;
   }
   if (emotion === 0) {
-    addNewPointError("Изабери емотикон кликом на знак питања.")
+    showFormError("Изабери емотикон кликом на знак питања.")
     return false;
   }
   if (title.length < 7) {
-    addNewPointError("Назив мора имати бар 7 знакова.")
+    showFormError("Назив мора имати бар 7 знакова.")
     return false;
   }
   if (description.length < 21) {
-    addNewPointError("Опис мора имати бар 21 знак.")
+    showFormError("Опис мора имати бар 21 знак.")
     return false;
   }
-  clearNewPointError();
-  storeNewPoint(emotion, title, description, theUser.uid, lat, lng)
-    .then((docRef) => {
-      removeMapMarker();
-      closeNewPoint(e);
-    });
+  clearFormError();
+  if (docId) {
+    storeNewPoint(emotion, title, description, theUser.uid, lat, lng)
+      .then((docRef) => {
+        removeMapMarker();
+        closeNewPoint(dialog);
+      });
+  }
+  else {
+
+  }
 
   return false;
 }
 
-function addNewPointError(msg) {
-  _('.error').innerText = msg;
-  _('.error').style.display = 'block';
+function showFormError(msg) {
+  _('.form_error').innerText = msg;
+  _('.form_error').style.display = 'block';
 }
 
-function clearNewPointError() {
-  _('.error').style.display = 'none';
-}
-
-function storeNewPoint(emotionId, name, description, userId, lat, lng) {
-  return db.collection('points').add({
-    a: false,
-    d: description,
-    e: emotionId,
-    n: name,
-    u: userId,
-    x: new firebase.firestore.GeoPoint(lat, lng),
-    t: firebase.firestore.FieldValue.serverTimestamp(),
-  })
-  .catch(function(error) {
-    showAlert('Неуспешна операција.')
-    console.error('Error writing to database', error);
-  });
+function clearFormError() {
+  _('.form_error').style.display = 'none';
 }
 
 function showPointDialog(id, data) {
@@ -472,6 +478,10 @@ function showPointDialog(id, data) {
   _('#deletePoint', dialog).addEventListener('click', () => {
     closePointDialog(dialog);
     deletePoint(id);
+  });
+  _('#editPoint', dialog).addEventListener('click', () => {
+    closePointDialog(dialog);
+    showEditPoint({id, data})
   });
 
   onEscapeKey(() => {closePointDialog(dialog);});
@@ -554,6 +564,8 @@ function fetchPoints() {
           const p = points[id];
           p.marker.setMap(null);
           delete points[id];
+        } else if (change.type === 'modified') {
+          points[id].data = change.doc.data();
         } else {
           const data = change.doc.data();
           const marker = new google.maps.Marker({
@@ -668,6 +680,41 @@ function createPopupClass() {
 
   return Popup;
 }
+function storeNewPoint(emotionId, name, description, userId, lat, lng) {
+  return db
+    .collection('points')
+    .add({
+      a: false,
+      d: description,
+      e: emotionId,
+      n: name,
+      u: userId,
+      x: new firebase.firestore.GeoPoint(lat, lng),
+      t: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .catch(function (error) {
+      showAlert('Нажалост, записивање није успело.')
+      console.error('Error writing to database', error);
+    });
+}
+
+function updatePoint(uid, data) {
+  return db
+    .collection('points')
+    .doc(uid)
+    .update({
+      d: data.d,
+      e: data.e,
+      n: data.name,
+      t: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .catch(function (error) {
+      showAlert('Нажалост, измена није успела.')
+      console.error('Error writing to database', error);
+    });
+}
+
+
 function deletePoint(id) {
   db
     .collection("points")
@@ -680,6 +727,7 @@ function deletePoint(id) {
       console.error("Error removing document: ", error);
     });
 }
+let theUser = null;
 
 function signedIn(user) {
   theUser = user;

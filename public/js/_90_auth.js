@@ -1,3 +1,4 @@
+let theUser = null;
 
 function signedIn(user) {
   theUser = user;

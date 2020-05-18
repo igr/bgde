@@ -23,8 +23,9 @@ button:hover, button:active, button:focus {
   background-color: var(--main-bg-color-dark);
 }
 
-.error {
+.form_error {
   padding: 4px 0;
   display: none;
   color: var(--error-color);
+  text-align: center;
 }

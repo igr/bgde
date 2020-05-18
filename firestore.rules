@@ -2,26 +2,33 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-  	// POINTS
+    function isAuthed() {
+      return request.auth.uid != null
+    }
+
+    function isOwner(res) {
+      return res.data.u == request.auth.uid
+    }
 
   	match /points/{pointId} {
-      // Anyone can read points
       allow list: if true;
       allow read: if true;
       // adding is limited to authenticated users
-      allow create: if request.auth.uid != null
-                       && (request.resource.data.n.size() <= 51
-                           && request.resource.data.d.size() <= 4000
-                          );
+      allow create: if isAuthed()
+                    &&
+                        (request.resource.data.n.size() <= 51
+                      && request.resource.data.d.size() <= 4000
+                      );
       // authenticated user can create/update their docs
-      allow update: if request.auth.uid != null
-                       && resource.data.u == request.auth.uid
-                       && (request.resource.data.n.size() <= 51
-                          && request.resource.data.d.size() <= 4000
-                       );
+      allow update: if isAuthed()
+                    && isOwner(resource)
+                    && 
+                        (request.resource.data.n.size() <= 51
+                      && request.resource.data.d.size() <= 4000
+                      );
       // authenticated user can delete their docs
-      allow delete: if request.auth.uid != null
-                       && resource.data.u == request.auth.uid;
+      allow delete: if isAuthed()
+                    && isOwner(resource);
     }
   }
 }

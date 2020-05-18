@@ -571,6 +571,13 @@ template {
   margin-top: 10px;
   text-align: center;
 }
+#point .navigate {
+  text-align: center;
+  margin: 4px 0;
+}
+#point .navigate a {
+  text-decoration: none;
+}
 
 input, textarea {
   outline: 0;
@@ -599,10 +606,11 @@ button:hover, button:active, button:focus {
   background-color: var(--main-bg-color-dark);
 }
 
-.error {
+.form_error {
   padding: 4px 0;
   display: none;
   color: var(--error-color);
+  text-align: center;
 }
 
 #map {

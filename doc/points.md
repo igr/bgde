@@ -7,3 +7,5 @@
 + `t` - timestamp
 + `u` - user id
 + `x` - geo location
+  + `x.latitude`
+  + `x.longitude`

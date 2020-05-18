@@ -35,13 +35,14 @@
         <form onsubmit="return submitNewPoint(this);" method="POST">
           <div style="display: flex">
             <div id="emotion" onclick="changeEmotion();"></div>
-            <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;" value="{{ name }}">
+            <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;" value="{{ data.n }}">
           </div>
-          <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?">{{ description }}</textarea>
-          <input type="hidden" name="lat" value="{{ lat }}">
-          <input type="hidden" name="lng" value="{{ lng }}">
+          <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?">{{ data.d }}</textarea>
+          <input type="hidden" name="lat" value="{{ data.x.latitude }}">
+          <input type="hidden" name="lng" value="{{ data.x.longitude }}">
+          <input type="hidden" name="id" value="{{ id }}">
           <button type="submit">Сачувај и подели</button>
-          <div class="error"></div>
+          <div class="form_error"></div>
         </form>
       </div>
     </template>
@@ -58,6 +59,7 @@
         <div class="close"></div>
         <img src="/gfx/em-{{ data.e }}.png">
         <h1>{{ data.n }}</h1>
+        <div class="navigate"><a href="#" onclick="navigate({{ data.x.latitude}}, {{data.x.longitude }});">одведи ме тамо</a></div>
         <div class="text">
           {{ data.d }}
         </div>
