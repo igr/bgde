@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> БГДЕ </title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+{% extends "_base.njk" %}
+{% block head %}
   <script src="/js/mustache.min.js"></script>
   <!-- update the version number as needed -->
   <script defer src="/__/firebase/7.14.3/firebase-app.js"></script>
@@ -20,8 +15,9 @@
   <!-- auth ui -->
   <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth__sr.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
-  </head>
-  <body>
+{% endblock %}
+
+{% block main %}
   <div id="firebaseui-auth-container" class="modal">
     <div class="close" onclick="closeModals();"></div>
   </div>
@@ -84,6 +80,8 @@
   <main>
     <div id="map"></div>
   </main>
+{% endblock %}
+
+{% block script %}
   <script src="/js/app.js"></script>
-  </body>
-</html>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "_base.njk" %}
+
+{% block head %}
+  <style>
+    body {
+      background-color: var(--main-bg-color-light);
+      height: auto;
+    }
+    main {
+      padding: 1rem;
+      width: 60%;
+      height: 80vh;
+      margin: 0 auto;
+      background-color: white;
+      font-size: 2rem;
+    }
+    h1 {
+      margin: 4rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    ul {
+      margin: 1rem;
+    }
+    li {
+      margin-left: 2rem;
+      list-style: disc;
+    }
+  </style>
+{% endblock %}
+
+{% block main %}
+  <main>
+    <h1>Услови коришћења</h1>
+    <p>
+      Комплетан садржај на сајту је доступан под <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a> лиценцом.
+    </p>
+
+  </main>
+{% endblock %}

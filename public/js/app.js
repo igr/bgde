@@ -45,6 +45,8 @@ function runScripts(el) {
   });
 }
 
+Mustache.tags = [ '[[', ']]' ];
+
 function render(templateSelector, ctx) {
   const template = _(templateSelector);
   const rendered = Mustache.render(template.innerHTML, ctx);
@@ -534,8 +536,8 @@ function initFirebase() {
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
       // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
     ],
-    tosUrl: '<your-tos-url>',
-    privacyPolicyUrl: '<your-privacy-policy-url>',
+    tosUrl: '/uslovi-koriscenja',
+    privacyPolicyUrl: '/politika-privatnosti',
   };
 
   // Initialize the FirebaseUI Widget using Firebase

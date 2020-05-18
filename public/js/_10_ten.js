@@ -35,6 +35,8 @@ function runScripts(el) {
   });
 }
 
+Mustache.tags = [ '[[', ']]' ];
+
 function render(templateSelector, ctx) {
   const template = _(templateSelector);
   const rendered = Mustache.render(template.innerHTML, ctx);
