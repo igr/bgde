@@ -47,14 +47,23 @@
   width: 300px;
 }
 
+.infoo {
+  width:200px;
+  height:30px;
+  text-align: center;
+  padding: 4px;
+  overflow: hidden;
+}
 .star {
   color: var(--text-color);
   font-size: 1rem;
   text-transform: uppercase;
   font-weight: bold;
   font-family: $font-text;
+  margin-top: 4px;
   &:hover {
-    color: var(--main-bg-color-dark);
+    color: #ffffff;
+    background-color: var(--main-bg-color-dark);
     text-decoration: none;
   }
 }

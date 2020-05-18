@@ -654,15 +654,25 @@ button:hover, button:active, button:focus {
   width: 300px;
 }
 
+.infoo {
+  width: 200px;
+  height: 30px;
+  text-align: center;
+  padding: 4px;
+  overflow: hidden;
+}
+
 .star {
   color: var(--text-color);
   font-size: 1rem;
   text-transform: uppercase;
   font-weight: bold;
   font-family: "Work Sans", sans-serif;
+  margin-top: 4px;
 }
 .star:hover {
-  color: var(--main-bg-color-dark);
+  color: #ffffff;
+  background-color: var(--main-bg-color-dark);
   text-decoration: none;
 }
 
