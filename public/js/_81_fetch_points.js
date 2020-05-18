@@ -104,7 +104,7 @@ function createPopupClass() {
   Popup.prototype.onRemove = function() {
     if (this.containerDiv.parentElement) {
       this.containerDiv.parentElement.removeChild(this.containerDiv);
-      this.containerDiv.style.zIndex = -1;
+      this.containerDiv.style.zIndex = '-1';
     }
   };
 

@@ -610,23 +610,26 @@ button:hover, button:active, button:focus {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(-23px, -39px);
+  transform: translate(-28px, -40px);
   border-radius: 4px;
   background-color: #ffffff;
-  padding: 5px;
-  overflow-y: auto;
+  overflow-y: hidden;
   font-family: "Work Sans", sans-serif;
   font-size: 18px;
-  border: 2px solid var(--dark-bg-color);
+  border: 2px solid var(--main-bg-color-dark);
   width: 300px;
   height: 48px;
   cursor: pointer;
 }
 .popup-bubble span {
   position: relative;
-  top: -8px;
+  top: -14px;
   margin-left: 4px;
   letter-spacing: -2px;
+}
+.popup-bubble img {
+  background-color: var(--main-bg-color-dark);
+  padding: 6px 10px;
 }
 
 /* The parent of the bubble. A zero-height div at the top of the tip. */

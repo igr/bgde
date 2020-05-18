@@ -37,7 +37,7 @@
             <div id="emotion" onclick="changeEmotion();"></div>
             <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;" value="{{ name }}">
           </div>
-          <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?"></textarea>
+          <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?">{{ description }}</textarea>
           <input type="hidden" name="lat" value="{{ lat }}">
           <input type="hidden" name="lng" value="{{ lng }}">
           <button type="submit">Сачувај и подели</button>
@@ -62,7 +62,7 @@
           {{ data.d }}
         </div>
         <div>
-          <button>OK</button>
+          <button>Затвори</button>
         </div>
       </div>
     </template>
