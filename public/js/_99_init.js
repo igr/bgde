@@ -3,10 +3,5 @@ ready(() => {
 
   initLogin();
 
-  initAddNewPointDialog();
-
-  initModalDialog();
-
   fetchPoints();
-
 });

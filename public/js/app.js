@@ -1,12 +1,45 @@
 
 const iconbase = '/gfx';
 
-// map
-const MAX_EMOTIONS = 4;
-let emotion = 1;
 
 // auth
 let theUser = null;
+// ten - super simple framework
+
+function _(selector, src) {
+  if (src === undefined) {
+    src = document;
+  }
+  return src.querySelector(selector);
+}
+function __(selector, src) {
+  if (src === undefined) {
+    src = document;
+  }
+  return src.querySelectorAll(selector);
+}
+function ready(callback) {
+  // in case the document is already rendered
+  if (document.readyState !== 'loading') callback();
+  // modern browsers
+  else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+  // IE <= 8
+  else document.attachEvent('onreadystatechange', function () {
+      if (document.readyState === 'complete') callback();
+    });
+}
+
+function runScripts(el) {
+  Array.from(el.querySelectorAll("script")).forEach( oldScript => {
+    const newScript = document.createElement("script");
+    Array.from(oldScript.attributes)
+      .forEach(
+        attr => newScript.setAttribute(attr.name, attr.value)
+      );
+    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+    oldScript.parentNode.replaceChild(newScript, oldScript);
+  });
+}
 
 function render(templateSelector, ctx) {
   const template = _(templateSelector);
@@ -18,44 +51,46 @@ function render(templateSelector, ctx) {
 
   return {
     attach: (target) => {
-      _(target).appendChild(tempTemplate.content.firstElementChild);
+      const child = _(target).appendChild(tempTemplate.content.firstElementChild);
+      child.setAttribute('data-ten', 'true'); // marker
+      runScripts(child);
+      return child;
     }
   }
 }
 
-function detach(query) {
-  const e = _(query);
-  e.parentNode.removeChild(e);
-}
-/**
- * Selects single element in DOM tree.
- */
-function _(selector, src) {
-  if (src === undefined) {
-    src = document;
+function detach(queryOrElement) {
+  let e = typeof queryOrElement === 'string' ? _(queryOrElement) : queryOrElement;
+  if (!e) {
+    return;
   }
-  return src.querySelector(selector);
+  while (true) {
+    if (e.getAttribute('data-ten')) {
+      if (e.parentNode) {
+        e.parentNode.removeChild(e);
+      }
+      return;
+    }
+    e = e.parentNode;
+    if (e === null) {
+      break;
+    }
+  }
 }
 
-/**
- * Selects all matched elements in DOM tree.
- */
-function __(selector) {
-  return document.querySelectorAll(selector);
-}
-
-/**
- * Invokes a callback when DOM is ready.
- */
-function ready(callback) {
-  // in case the document is already rendered
-  if (document.readyState !== 'loading') callback();
-  // modern browsers
-  else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
-  // IE <= 8
-  else document.attachEvent('onreadystatechange', function () {
-      if (document.readyState === 'complete') callback();
-    });
+function onEscapeKey(fn) {
+  document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    let isEscape;
+    if ("key" in evt) {
+      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    } else {
+      isEscape = (evt.keyCode === 27);
+    }
+    if (isEscape) {
+      fn();
+    }
+  };
 }
 const styles =
   [
@@ -317,7 +352,7 @@ function initMapMarker() {
     marker.setMap(map);
     marker.setPosition(e.latLng);
     infowindow.setContent(
-      "<a href='#' class='star' onclick='addNewPoint" + e.latLng + "; return false;'>Додај ово место...</a>")
+      "<a href='#' class='star' onclick='showNewPoint" + e.latLng + "; return false;'>Додај место ⮕</a>")
     ;
     infowindow.open(map, marker);
   });
@@ -331,23 +366,30 @@ function removeMapMarker() {
 }
 const MAX_TITLE = 51;
 const MAX_DESC = 4000;
+const MAX_EMOTIONS = 4;
+let emotion = 0;
 
-function initAddNewPointDialog() {
-  _('#emotion').addEventListener('click', () => {
-    changeEmotion();
+function showNewPoint(lat, lng) {
+  detach('#add');
+
+  const dialog = render('#_add', {lat, lng}).attach('body');
+
+  _('.close', dialog).addEventListener('click', () => {
+    closePointDialog(dialog);
   });
+  onEscapeKey(() => {
+    closeNewPoint(dialog);
+  })
+
+  emotion = 0;
+  if (!theUser) {
+    showAlert('Морате бити пријављени да би додавали места!');
+  }
 }
 
-function addNewPoint(lat, lng) {
-  emotion = 0;
-  showModal('#add');
-  const add = _('#add');
-  _('[name="lng"]', add).value = lng;
-  _('[name="lat"]', add).value = lat;
-  resetNewPointForm();
-  if (!theUser) {
-    addNewPointError('Морате бити пријављени да би додавали места!');
-  }
+function closeNewPoint(dialog) {
+  detach(dialog);
+  onEscapeKey(() => {});
 }
 
 function changeEmotion() {
@@ -356,12 +398,6 @@ function changeEmotion() {
     emotion = 1;
   }
   _("#emotion").style.backgroundImage = 'url(' + iconbase + `/em-${emotion}.png)`;
-}
-
-function resetNewPointForm() {
-  const add = _('#add');
-  _('[name="opis"]', add).value = '';
-  _('[name="naziv"]', add).value = '';
 }
 
 function submitNewPoint(e) {
@@ -391,7 +427,7 @@ function submitNewPoint(e) {
   storeNewPoint(emotion, title, description, theUser.uid, lat, lng)
     .then((docRef) => {
       removeMapMarker();
-      closeModals();
+      closeNewPoint(e);
     });
 
   return false;
@@ -420,6 +456,26 @@ function storeNewPoint(emotionId, name, description, userId, lat, lng) {
     showAlert('Неуспешна операција.')
     console.error('Error writing to database', error);
   });
+}
+
+function showPointDialog(id, data) {
+  detach('#point');
+
+  const dialog = render('#_point', {data}).attach('body');
+
+  _('.close', dialog).addEventListener('click', () => {
+    closePointDialog(dialog);
+  });
+  _('button', dialog).addEventListener('click', () => {
+    closePointDialog(dialog);
+  });
+
+  onEscapeKey(() => {closePointDialog(dialog);});
+}
+
+function closePointDialog(dialog) {
+  detach(dialog);
+  onEscapeKey(() => {});
 }
 let auth;
 let db;
@@ -506,7 +562,7 @@ function fetchPoints() {
           });
 
           marker.addListener('mouseover', () => {
-            showPointInfo(map, data.n, data.x, data.e);
+            showPointInfo(map, id, data);
           });
 
           points[id] = {
@@ -520,12 +576,8 @@ function fetchPoints() {
 }
 let popup, Popup;
 
-function showPointInfo(map, name, x, e) {
-  popup = new Popup(
-    new google.maps.LatLng(x.latitude, x.longitude),
-    name,
-    e
-  );
+function showPointInfo(map, id, data) {
+  popup = new Popup(id, data);
   popup.setMap(map);
 }
 
@@ -541,8 +593,10 @@ function closePointInfo() {
  * This function should be called by initMap.
  */
 function createPopupClass() {
-  function Popup(position, contentText, emotion) {
-    this.position = position;
+  function Popup(id, data) {
+    this.position = new google.maps.LatLng(data.x.latitude, data.x.longitude);
+    const contentText = data.n;
+    const emotion = data.e;
 
     const content = document.createElement('div');
     content.classList.add('popup-bubble');
@@ -553,8 +607,9 @@ function createPopupClass() {
     const span = document.createElement('span')
     span.appendChild(document.createTextNode(contentText));
     content.appendChild(span);
-    // close it when mouse is out
+
     content.addEventListener('mouseout', () => { closePointInfo(); });
+    content.addEventListener('click', () => { showPointDialog(id, data); });
 
 
     // This zero-height div is positioned at the bottom of the bubble.
@@ -625,19 +680,20 @@ function signedOut() {
 
 function initLogin() {
   _('#login').addEventListener('click', () => {
-    showModal("#firebaseui-auth-container");
+    showAuthModal("#firebaseui-auth-container");
   });
   _('#logout').addEventListener('click', () => {
-    auth.signOut().then(() => {
-      location.reload();
-    });
+    auth.signOut().then(() => {});
   });
 }
 
-function showModal(selector) {
+function showAuthModal(selector) {
   const el = _(selector);
   el.style.display = 'block';
   el.style.zIndex = '100';
+  onEscapeKey(() => {
+    closeModals();
+  });
 }
 
 function closeModals() {
@@ -646,29 +702,10 @@ function closeModals() {
     el.style.display = 'none';
     el.style.zIndex = '-1';
   }
-}
-
-function initModalDialog() {
-  document.onkeydown = function(evt) {
-    evt = evt || window.event;
-    let isEscape;
-    if ("key" in evt) {
-      isEscape = (evt.key === "Escape" || evt.key === "Esc");
-    } else {
-      isEscape = (evt.keyCode === 27);
-    }
-    if (isEscape) {
-      closeModals();
-    }
-  };
-  const modals = __(".modal");
-  for (el of modals) {
-    _('.close', el).addEventListener('click', () => {
-      closeModals();
-    });
-  }
+  onEscapeKey(() => {});
 }
 function showAlert(message) {
+  detach("#alert");
   render('#_alert', { message }).attach('body');
 }
 ready(() => {
@@ -676,10 +713,5 @@ ready(() => {
 
   initLogin();
 
-  initAddNewPointDialog();
-
-  initModalDialog();
-
   fetchPoints();
-
 });

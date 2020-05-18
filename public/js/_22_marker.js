@@ -14,7 +14,7 @@ function initMapMarker() {
     marker.setMap(map);
     marker.setPosition(e.latLng);
     infowindow.setContent(
-      "<a href='#' class='star' onclick='addNewPoint" + e.latLng + "; return false;'>Додај ово место...</a>")
+      "<a href='#' class='star' onclick='showNewPoint" + e.latLng + "; return false;'>Додај место ⮕</a>")
     ;
     infowindow.open(map, marker);
   });

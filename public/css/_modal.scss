@@ -1,5 +1,6 @@
 
 .modal {
+  padding: 1rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -8,8 +9,6 @@
   max-width: 100%;
   height: 500px;
   max-height: 100%;
-  z-index: -1;
-  display: none;
   background-color: #ffffff;
   box-shadow:
           0 26.1px 7.1px rgba(0, 0, 0, 0.031),
@@ -18,6 +17,7 @@
           0 36.7px 43.7px rgba(0, 0, 0, 0.069),
           0 63px 106px rgba(0, 0, 0, 0.1)
   ;
+
   .close {
     float: right;
     cursor: pointer;
@@ -29,11 +29,12 @@
 }
 
 #firebaseui-auth-container {
-  padding: 1rem;
   height: 400px;
+  z-index: -1;
+  display: none;
 }
+
 #add {
-  padding: 1rem;
   height: 500px;
 }
 #emotion {
@@ -41,4 +42,23 @@
   width: 40px;
   height: 50px;
   cursor: pointer;
+}
+#point {
+  height: 600px;
+  h1 {
+    width: 80%;
+    margin:auto;
+    margin-top: 20px;
+  }
+  .text {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    height: 400px;
+    overflow-y: auto;
+    font-size: 1.4rem;
+  }
+  img {
+    float: left;
+    margin-top: 30px;
+  }
 }

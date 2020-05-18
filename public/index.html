@@ -25,29 +25,45 @@
   <body>
 
     <div id="firebaseui-auth-container" class="modal">
-      <div class="close"></div>
+      <div class="close" onclick="closeModals();"></div>
     </div>
 
-    <div id="add" class="modal">
-      <div class="close"></div>
-      <h2>Моје посебно БГД место</h2>
-      <form onsubmit="return submitNewPoint(this);" method="POST">
-        <div style="display: flex">
-          <div id="emotion"></div>
-          <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;">
-        </div>
-        <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?"></textarea>
-        <input type="hidden" name="lat">
-        <input type="hidden" name="lng">
-        <button type="submit">Сачувај и подели</button>
-        <div class="error"></div>
-      </form>
-    </div>
+    <template id="_add">
+      <div id="add" class="modal">
+        <div class="close"></div>
+        <h2>Моје посебно БГД место</h2>
+        <form onsubmit="return submitNewPoint(this);" method="POST">
+          <div style="display: flex">
+            <div id="emotion" onclick="changeEmotion();"></div>
+            <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;" value="{{ name }}">
+          </div>
+          <textarea name="opis" rows="14" placeholder="Зашто ти је ово место посебно?"></textarea>
+          <input type="hidden" name="lat" value="{{ lat }}">
+          <input type="hidden" name="lng" value="{{ lng }}">
+          <button type="submit">Сачувај и подели</button>
+          <div class="error"></div>
+        </form>
+      </div>
+    </template>
 
     <template id="_alert">
-      <div class="alert">
+      <div id="alert">
         {{ message }}
-        <span onclick="detach('.alert');">&times;</span>
+        <span onclick="detach(this);">&times;</span>
+      </div>
+    </template>
+
+    <template id="_point">
+      <div id="point" class="modal">
+        <div class="close"></div>
+        <img src="/gfx/em-{{ data.e }}.png">
+        <h1>{{ data.n }}</h1>
+        <div class="text">
+          {{ data.d }}
+        </div>
+        <div>
+          <button>OK</button>
+        </div>
       </div>
     </template>
 

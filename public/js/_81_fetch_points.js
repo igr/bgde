@@ -27,7 +27,7 @@ function fetchPoints() {
           });
 
           marker.addListener('mouseover', () => {
-            showPointInfo(map, data.n, data.x, data.e);
+            showPointInfo(map, id, data);
           });
 
           points[id] = {
@@ -41,12 +41,8 @@ function fetchPoints() {
 }
 let popup, Popup;
 
-function showPointInfo(map, name, x, e) {
-  popup = new Popup(
-    new google.maps.LatLng(x.latitude, x.longitude),
-    name,
-    e
-  );
+function showPointInfo(map, id, data) {
+  popup = new Popup(id, data);
   popup.setMap(map);
 }
 
@@ -62,8 +58,10 @@ function closePointInfo() {
  * This function should be called by initMap.
  */
 function createPopupClass() {
-  function Popup(position, contentText, emotion) {
-    this.position = position;
+  function Popup(id, data) {
+    this.position = new google.maps.LatLng(data.x.latitude, data.x.longitude);
+    const contentText = data.n;
+    const emotion = data.e;
 
     const content = document.createElement('div');
     content.classList.add('popup-bubble');
@@ -74,8 +72,9 @@ function createPopupClass() {
     const span = document.createElement('span')
     span.appendChild(document.createTextNode(contentText));
     content.appendChild(span);
-    // close it when mouse is out
+
     content.addEventListener('mouseout', () => { closePointInfo(); });
+    content.addEventListener('click', () => { showPointDialog(id, data); });
 
 
     // This zero-height div is positioned at the bottom of the bubble.

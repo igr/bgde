@@ -46,12 +46,12 @@
 
 .star {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 1rem;
   text-transform: uppercase;
   font-weight: bold;
   font-family: $font-text;
   &:hover {
-    color: #fff;
-    background-color: var(--dark-bg-color);
+    color: var(--main-bg-color-dark);
+    text-decoration: none;
   }
 }

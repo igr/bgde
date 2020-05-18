@@ -1,22 +1,29 @@
 const MAX_TITLE = 51;
 const MAX_DESC = 4000;
+const MAX_EMOTIONS = 4;
+let emotion = 0;
 
-function initAddNewPointDialog() {
-  _('#emotion').addEventListener('click', () => {
-    changeEmotion();
+function showNewPoint(lat, lng) {
+  detach('#add');
+
+  const dialog = render('#_add', {lat, lng}).attach('body');
+
+  _('.close', dialog).addEventListener('click', () => {
+    closePointDialog(dialog);
   });
+  onEscapeKey(() => {
+    closeNewPoint(dialog);
+  })
+
+  emotion = 0;
+  if (!theUser) {
+    showAlert('Морате бити пријављени да би додавали места!');
+  }
 }
 
-function addNewPoint(lat, lng) {
-  emotion = 0;
-  showModal('#add');
-  const add = _('#add');
-  _('[name="lng"]', add).value = lng;
-  _('[name="lat"]', add).value = lat;
-  resetNewPointForm();
-  if (!theUser) {
-    addNewPointError('Морате бити пријављени да би додавали места!');
-  }
+function closeNewPoint(dialog) {
+  detach(dialog);
+  onEscapeKey(() => {});
 }
 
 function changeEmotion() {
@@ -25,12 +32,6 @@ function changeEmotion() {
     emotion = 1;
   }
   _("#emotion").style.backgroundImage = 'url(' + iconbase + `/em-${emotion}.png)`;
-}
-
-function resetNewPointForm() {
-  const add = _('#add');
-  _('[name="opis"]', add).value = '';
-  _('[name="naziv"]', add).value = '';
 }
 
 function submitNewPoint(e) {
@@ -60,7 +61,7 @@ function submitNewPoint(e) {
   storeNewPoint(emotion, title, description, theUser.uid, lat, lng)
     .then((docRef) => {
       removeMapMarker();
-      closeModals();
+      closeNewPoint(e);
     });
 
   return false;
