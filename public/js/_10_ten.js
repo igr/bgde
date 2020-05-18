@@ -26,6 +26,19 @@ function ready(callback) {
       if (document.readyState === 'complete') callback();
     });
 }
+function toggleClass(el, className) {
+  if (!el) return;
+  if (!el.classList) {
+    el.className += ' ' + className;
+    return;
+  }
+  if (el.classList.contains(className)) {
+    el.classList.remove(className);
+  }
+  else {
+    el.classList.add(className);
+  }
+}
 
 function runScripts(el) {
   Array.from(el.querySelectorAll("script")).forEach( oldScript => {

@@ -1,4 +1,6 @@
 ready(() => {
+  initAbout();
+
   initFirebase();
 
   initLogin();

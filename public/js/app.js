@@ -36,6 +36,19 @@ function ready(callback) {
       if (document.readyState === 'complete') callback();
     });
 }
+function toggleClass(el, className) {
+  if (!el) return;
+  if (!el.classList) {
+    el.className += ' ' + className;
+    return;
+  }
+  if (el.classList.contains(className)) {
+    el.classList.remove(className);
+  }
+  else {
+    el.classList.add(className);
+  }
+}
 
 function runScripts(el) {
   Array.from(el.querySelectorAll("script")).forEach( oldScript => {
@@ -789,7 +802,14 @@ function showAlert(message) {
   detach("#alert");
   render('#_alert', { message }).attach('body');
 }
+function initAbout() {
+  _('#bgde').addEventListener('click', (e) => {
+    toggleClass(_('#about'), 'about-show');
+  });
+}
 ready(() => {
+  initAbout();
+
   initFirebase();
 
   initLogin();

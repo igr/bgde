@@ -733,6 +733,42 @@ nav {
   cursor: pointer;
 }
 
+#bgde {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--main-bg-color-dark);
+  padding: 2px;
+  letter-spacing: 0;
+  transform: rotate(-20deg);
+  cursor: pointer;
+  text-align: right;
+  float: right;
+  position: relative;
+  top: -20px;
+  left: 62px;
+}
+
+#about {
+  position: fixed;
+  top: 40px;
+  width: 200px;
+  left: -200px;
+  background-color: black;
+  z-index: 8000;
+  transition: 1s;
+  font-size: 0.8rem;
+  color: var(--main-bg-color-light);
+  padding: 10px;
+}
+#about p {
+  margin-bottom: 1rem;
+}
+
+.about-show {
+  left: 0 !important;
+}
+
 html {
   height: 100%;
 }
@@ -770,21 +806,6 @@ a {
 a:hover {
   color: #fff;
   background-color: var(--main-bg-color-dark);
-}
-
-#bgde {
-  font-size: 20px;
-  font-weight: bold;
-  position: fixed;
-  top: 20px;
-  left: -3px;
-  z-index: 8000;
-  color: white;
-  background-color: var(--main-bg-color-dark);
-  padding: 2px;
-  letter-spacing: 0;
-  transform: rotate(-20deg);
-  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */
