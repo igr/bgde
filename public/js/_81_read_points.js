@@ -15,9 +15,14 @@ function fetchPoints() {
           const p = points[id];
           p.marker.setMap(null);
           delete points[id];
-        // } else if (change.type === 'modified') {
-        //   points[id].data = change.doc.data();
         } else {
+          // both modified and created
+
+          if (change.type === 'modified') {
+            const p = points[id];
+            p.marker.setMap(null);
+          }
+
           const data = change.doc.data();
           const marker = new google.maps.Marker({
             icon: iconbase + `/em-${data.e}.png`,
