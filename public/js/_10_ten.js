@@ -1,10 +1,14 @@
 // ten - super simple framework
 
-function _(selector, src) {
+function _(selector, src, callback) {
   if (src === undefined) {
     src = document;
   }
-  return src.querySelector(selector);
+  const element = src.querySelector(selector);
+  if (callback && element) {
+    callback(element);
+  }
+  return element;
 }
 function __(selector, src) {
   if (src === undefined) {

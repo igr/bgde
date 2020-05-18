@@ -10,13 +10,17 @@ function showPointDialog(id, data) {
   _('button', dialog).addEventListener('click', () => {
     closePointDialog(dialog);
   });
-  _('#deletePoint', dialog).addEventListener('click', () => {
-    closePointDialog(dialog);
-    deletePoint(id);
+  _('#deletePoint', dialog, e => {
+    e.addEventListener('click', () => {
+      closePointDialog(dialog);
+      deletePoint(id);
+    });
   });
-  _('#editPoint', dialog).addEventListener('click', () => {
-    closePointDialog(dialog);
-    showEditPoint({id, data})
+  _('#editPoint', dialog, e => {
+    e.addEventListener('click', () => {
+      closePointDialog(dialog);
+      showEditPoint({id, data})
+    });
   });
 
   onEscapeKey(() => {closePointDialog(dialog);});

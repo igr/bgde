@@ -10,11 +10,15 @@ function navigate(lat, lng){
 }
 // ten - super simple framework
 
-function _(selector, src) {
+function _(selector, src, callback) {
   if (src === undefined) {
     src = document;
   }
-  return src.querySelector(selector);
+  const element = src.querySelector(selector);
+  if (callback && element) {
+    callback(element);
+  }
+  return element;
 }
 function __(selector, src) {
   if (src === undefined) {
@@ -483,13 +487,17 @@ function showPointDialog(id, data) {
   _('button', dialog).addEventListener('click', () => {
     closePointDialog(dialog);
   });
-  _('#deletePoint', dialog).addEventListener('click', () => {
-    closePointDialog(dialog);
-    deletePoint(id);
+  _('#deletePoint', dialog, e => {
+    e.addEventListener('click', () => {
+      closePointDialog(dialog);
+      deletePoint(id);
+    });
   });
-  _('#editPoint', dialog).addEventListener('click', () => {
-    closePointDialog(dialog);
-    showEditPoint({id, data})
+  _('#editPoint', dialog, e => {
+    e.addEventListener('click', () => {
+      closePointDialog(dialog);
+      showEditPoint({id, data})
+    });
   });
 
   onEscapeKey(() => {closePointDialog(dialog);});
