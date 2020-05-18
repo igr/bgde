@@ -784,6 +784,7 @@ a:hover {
   padding: 2px;
   letter-spacing: 0;
   transform: rotate(-20deg);
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

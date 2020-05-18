@@ -309,8 +309,8 @@ function createMapSwitchTypeControl(controlDiv, map) {
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 44.787197, lng: 20.457273},
-    zoom: 10,
-    minZoom: 10,
+    minZoom: 12,
+    zoom: 12,
     clickableIcons: false,
     streetViewControl: false,
     mapTypeControl: false,
@@ -324,13 +324,15 @@ function initMap() {
     styles,
     restriction: {
       latLngBounds: {
-        east: 20.50,
-        west: 20.38,
-        north: 44.835,
-        south: 44.76,
+        east: 20.60,
+        west: 20.30,
+        north: 44.880,
+        south: 44.740,
       },
     },
   });
+
+  map.setZoom(13);
 
   // mapTypeSwitchControl
 
@@ -570,8 +572,8 @@ function fetchPoints() {
           const p = points[id];
           p.marker.setMap(null);
           delete points[id];
-        } else if (change.type === 'modified') {
-          points[id].data = change.doc.data();
+        // } else if (change.type === 'modified') {
+        //   points[id].data = change.doc.data();
         } else {
           const data = change.doc.data();
           const marker = new google.maps.Marker({
