@@ -8,6 +8,9 @@ input, textarea {
   box-sizing: border-box;
   font-size: 16px;
 }
+textarea {
+  resize: none;
+}
 button {
   text-transform: uppercase;
   outline: 0;

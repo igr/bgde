@@ -16,14 +16,15 @@ function storeNewPoint(emotionId, name, description, userId, lat, lng) {
     });
 }
 
-function updatePoint(uid, data) {
+function updatePoint(uid, emotionId, name, description, userId) {
   return db
     .collection('points')
     .doc(uid)
     .update({
-      d: data.d,
-      e: data.e,
-      n: data.name,
+      d: description,
+      e: emotionId,
+      n: name,
+      u: userId,
       t: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .catch(function (error) {

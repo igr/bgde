@@ -6,6 +6,10 @@ service cloud.firestore {
       return request.auth.uid != null
     }
 
+    function isUser(uid) {
+      return request.auth.uid == uid
+    }
+
     function isOwner(res) {
       return res.data.u == request.auth.uid
     }
@@ -15,12 +19,14 @@ service cloud.firestore {
       allow read: if true;
       // adding is limited to authenticated users
       allow create: if isAuthed()
+                    && isUser(request.resource.data.u)
                     &&
                         (request.resource.data.n.size() <= 51
                       && request.resource.data.d.size() <= 4000
                       );
       // authenticated user can create/update their docs
       allow update: if isAuthed()
+                    && isUser(request.resource.data.u)
                     && isOwner(resource)
                     && 
                         (request.resource.data.n.size() <= 51

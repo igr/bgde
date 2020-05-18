@@ -47,7 +47,7 @@ function changeEmotion() {
   _("#emotion").style.backgroundImage = 'url(' + iconbase + `/em-${emotion}.png)`;
 }
 
-function submitNewPoint(dialog) {
+function submitPoint(dialog) {
   const docId = _('[name="id"]', dialog).value;
   const title = _('[name="naziv"]', dialog).value.substring(0, MAX_TITLE);
   const description = _('[name="opis"]', dialog).value.substring(0, MAX_DESC);
@@ -62,8 +62,8 @@ function submitNewPoint(dialog) {
     showFormError("Изабери емотикон кликом на знак питања.")
     return false;
   }
-  if (title.length < 7) {
-    showFormError("Назив мора имати бар 7 знакова.")
+  if (title.length < 5) {
+    showFormError("Назив мора имати бар 5 знакова.")
     return false;
   }
   if (description.length < 21) {
@@ -72,14 +72,18 @@ function submitNewPoint(dialog) {
   }
   clearFormError();
   if (docId) {
-    storeNewPoint(emotion, title, description, theUser.uid, lat, lng)
+    updatePoint(docId, emotion, title, description, theUser.uid)
       .then((docRef) => {
         removeMapMarker();
         closeNewPoint(dialog);
       });
   }
   else {
-
+    storeNewPoint(emotion, title, description, theUser.uid, lat, lng)
+      .then((docRef) => {
+        removeMapMarker();
+        closeNewPoint(dialog);
+      });
   }
 
   return false;

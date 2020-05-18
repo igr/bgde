@@ -32,7 +32,7 @@
       <div id="add" class="modal">
         <div class="close"></div>
         <h2>Моје посебно БГД место</h2>
-        <form onsubmit="return submitNewPoint(this);" method="POST">
+        <form onsubmit="return submitPoint(this);" method="POST">
           <div style="display: flex">
             <div id="emotion" onclick="changeEmotion();"></div>
             <input type="text" name="naziv" placeholder="Кратак назив..." maxlength="51" style="margin-left: 5px;" value="{{ data.n }}">
