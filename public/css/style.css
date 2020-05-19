@@ -787,6 +787,8 @@ body {
   font-size: 16px;
   font-family: "Work Sans", sans-serif;
   color: var(--text-color);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1 {

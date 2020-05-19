@@ -4,6 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> БГДЕ </title>
+
+    <meta name="author" content="igo.rs">
+    <meta property="og:title" content="БГДЕ">
+    <meta property="og:type" content="website">
+    <meta name="description" content="Заједничка мапа посебних БГД места.">
+    <meta property="og:description" content="Заједничка мапа посебних БГД места."/>
+    <meta property="og:locale" content="sr_RS"/>
+    <meta property="og:url" content="https://gde.rs">
+    <meta property="og:site_name" content="БГДЕ"/>
+    <meta property="og:image" content="https://bgde.rs/bgde.png"/>
+
     <link rel="stylesheet" type="text/css" href="/css/style.css">
   <script src="/js/mustache.min.js"></script>
   <!-- update the version number as needed -->
@@ -56,7 +67,7 @@
   <template id="_point">
     <div id="point" class="modal">
       <div class="close"></div>
-      <img src="/gfx/em-[[ data.e ]].png">
+      <img src="/gfx/em-[[ data.e ]].png" alt="емотикон">
       <h1>[[ data.n ]]</h1>
       <div class="navigate"><a href="#" onclick="navigate([[ data.x.latitude ]], [[ data.x.longitude ]]);">одведи ме тамо</a></div>
       <div class="text">
@@ -77,23 +88,22 @@
   <nav>
     <a href="#" id="login">пријава</a>
     <div id="user">
-      <img src="">
+      <img src="" alt="профилна слика">
       <a href="#" id="logout">одјава</a>
     </div>
   </nav>
 
   <div id="about">
     <div id="bgde">БГДЕ</div>
-    <p style="margin-top: 20px">Мапа посебних БГД места, само ваших.</p>
+    <p style="margin-top: 20px">Заједничка мапа посебних БГД места.</p>
     <p>
       Упутства. <b>Десни</b> клик за додавање.
       <b>Леви</b> клик за читање. <b>Пријава</b>
       потребна.
     </p>
     <p>
-      <b>Емотикони</b> одређују емоцију.
+      <b>Емотикони</b> одређују категорију.
       <b>Речи</b> описују место.
-      <b>Искрено</b> се дела.
     </p>
     <a href="https://igo.rs" id="igr" target="_blank">by igr</a>
   </div>

@@ -4,6 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ title }} </title>
+
+    <meta name="author" content="igo.rs">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:type" content="website">
+    <meta name="description" content="{{ description }}">
+    <meta property="og:description" content="{{ description }}"/>
+    <meta property="og:locale" content="sr_RS"/>
+    <meta property="og:url" content="https://gde.rs">
+    <meta property="og:site_name" content="{{ title }}"/>
+    <meta property="og:image" content="https://bgde.rs/bgde.png"/>
+
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     {% block head %}{% endblock %}
   </head>
