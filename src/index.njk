@@ -15,6 +15,7 @@
   <!-- auth ui -->
   <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth__sr.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
+  <link rel="preload" href="/gfx/map-star.png" as="image">
 {% endblock %}
 
 {% block main %}
@@ -77,7 +78,21 @@
     </div>
   </nav>
 
-  <div id="bgde">БГДЕ</div>
+  <div id="about">
+    <div id="bgde">БГДЕ</div>
+    <p style="margin-top: 20px">Мапа посебних БГД места, само ваших.</p>
+    <p>
+      Упутства. <b>Десни</b> клик за додавање.
+      <b>Леви</b> клик за читање. <b>Пријава</b>
+      потребна.
+    </p>
+    <p>
+      <b>Емотикони</b> одређују емоцију.
+      <b>Речи</b> описују место.
+      <b>Искрено</b> се дела.
+    </p>
+    <a href="https://igo.rs" id="igr" target="_blank">by igr</a>
+  </div>
 
   <main>
     <div id="map"></div>

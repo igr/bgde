@@ -611,9 +611,8 @@ function fetchPoints() {
             map
           });
 
-          marker.addListener('mouseover', () => {
-            showPointInfo(map, id, data);
-          });
+          marker.addListener('mouseover', () => { showPointInfo(map, id, data); });
+          marker.addListener('click', () => { showPointDialog(id, data); });
 
           points[id] = {
             marker: marker,
@@ -627,6 +626,9 @@ function fetchPoints() {
 let popup, Popup;
 
 function showPointInfo(map, id, data) {
+  if (popup) {
+    popup.setMap(null);
+  }
   popup = new Popup(id, data);
   popup.setMap(map);
 }
