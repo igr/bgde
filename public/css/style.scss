@@ -52,3 +52,15 @@ a {
   color: #bf2139;
   padding: 0;
 }
+
+footer {
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  background-color: #ffffff;
+  color: var(--main-bg-color-dark);
+  font-size: 14px;
+  padding: 2px;
+}
